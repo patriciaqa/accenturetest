@@ -333,8 +333,5 @@ public class QuoteSteps {
 		WebElement message = driver.findElement(By.xpath("/html/body/div[4]/h2"));
 		assertEquals(message.getText(), message_text);
 
-		// page object
-
-		// up github
 	}
 }
