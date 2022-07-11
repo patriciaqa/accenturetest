@@ -1,7 +1,7 @@
 package StepDefinitions;
 
 import static org.junit.Assert.assertEquals;
-
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
@@ -11,9 +11,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Lorem;
-import com.github.javafaker.PhoneNumber;
-
 import io.cucumber.java.en.*;
+import java.util.Calendar;
+import java.util.Date;
 
 public class QuoteSteps {
 
@@ -57,23 +57,29 @@ public class QuoteSteps {
 		model.selectByIndex(random_model + 1);
 
 		// fill cylinder capacity
-		/*
-		 * int min = 50; int max = 100; int random_engine =
-		 * (int)Math.floor(Math.random()*(max-min+1)+min);
-		 */
+		int min_cylinder = 50;
+		int max_cylinder = 100;
+		Integer random_cylinder = (int) Math.floor(Math.random() * (max_cylinder - min_cylinder + 1) + min_cylinder);
+		String random_cylinder_str = random_cylinder.toString();
 
-		driver.findElement(By.id("cylindercapacity")).sendKeys("90");
+		driver.findElement(By.id("cylindercapacity")).sendKeys(random_cylinder_str);
 
 		// fill engine performance
-		/*
-		 * int min = 50; int max = 100; int random_engine =
-		 * (int)Math.floor(Math.random()*(max-min+1)+min);
-		 */
+		int min_engine = 50;
+		int max_engine = 100;
+		Integer random_engine = (int) Math.floor(Math.random() * (max_engine - min_engine + 1) + min_engine);
+		String random_engine_str = random_engine.toString();
 
-		driver.findElement(By.id("engineperformance")).sendKeys("70");
+		driver.findElement(By.id("engineperformance")).sendKeys(random_engine_str);
 
 		// fill Date
-		driver.findElement(By.id("dateofmanufacture")).sendKeys("05/10/2020");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, -10);// to get previous day add -10
+		Date datePast = cal.getTime();
+		String datePastStr = dateFormat.format(datePast);
+
+		driver.findElement(By.id("dateofmanufacture")).sendKeys(datePastStr);
 
 		// selection number of seats
 		int index_seats = 8; // generate random values from 0-9
@@ -105,33 +111,34 @@ public class QuoteSteps {
 		fuel.selectByIndex(random_fuel + 1);
 
 		// fill payload
-		Integer random_payload_int = rand.nextInt(300);
+		Integer random_payload_int = rand.nextInt(900);
 		String random_payload_str = random_payload_int.toString();
 
 		driver.findElement(By.name("Payload")).sendKeys(random_payload_str);
 
 		// fill total weight [kg]
-		/*
-		 * int min = 500; int max = 100000; int random_engine =
-		 * (int)Math.floor(Math.random()*(max-min+1)+min);
-		 */
+		int min_weight = 100;
+		int max_weight = 50000;
+		Integer random_weight = (int) Math.floor(Math.random() * (max_weight - min_weight + 1) + min_weight);
+		String random_weight_str = random_weight.toString();
 
-		driver.findElement(By.id("totalweight")).sendKeys("400");
+		driver.findElement(By.id("totalweight")).sendKeys(random_weight_str);
 
 		// fill list price
-		/*
-		 * int min = 500; int max = 100000; int random_engine =
-		 * (int)Math.floor(Math.random()*(max-min+1)+min);
-		 */
+		int min_price = 500;
+		int max_price = 100000;
+		Integer random_price = (int) Math.floor(Math.random() * (max_price - min_price + 1) + min_price);
+		String random_price_str = random_price.toString();
 
-		driver.findElement(By.name("List Price")).sendKeys("700");
+		driver.findElement(By.name("List Price")).sendKeys(random_price_str);
 
 		// fill mileage
-		/*
-		 * int min = 100; int max = 100000; int random_engine =
-		 * (int)Math.floor(Math.random()*(max-min+1)+min);
-		 */
-		driver.findElement(By.name("Annual Mileage")).sendKeys("250");
+		int min_mileage = 100;
+		int max_mileage = 100000;
+		Integer random_mileage = (int) Math.floor(Math.random() * (max_mileage - min_mileage + 1) + min_mileage);
+		String random_mileage_str = random_mileage.toString();
+
+		driver.findElement(By.name("Annual Mileage")).sendKeys(random_mileage_str);
 
 		// validate fill valid data
 		WebElement countvehicle = driver.findElement(By.id("entervehicledata")).findElement(By.className("counter"));
@@ -156,7 +163,13 @@ public class QuoteSteps {
 		driver.findElement(By.id("lastname")).sendKeys(lastName);
 
 		// fill birth date
-		driver.findElement(By.id("birthdate")).sendKeys("04/13/1989");
+		SimpleDateFormat dateFormatb = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar calb = Calendar.getInstance();
+		calb.add(Calendar.YEAR, -21); // to get previous year add -21
+		Date nextYearb = calb.getTime();
+		String dateFutureBStr = dateFormatb.format(nextYearb);
+
+		driver.findElement(By.id("birthdate")).sendKeys(dateFutureBStr);
 
 		// gender
 
@@ -213,7 +226,14 @@ public class QuoteSteps {
 		Random rand = new Random();
 
 		// fill start date
-		driver.findElement(By.id("startdate")).sendKeys("05/10/2023");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar cal = Calendar.getInstance();
+		// cal.add(Calendar.YEAR, 1); // to get previous year add -1
+		cal.add(Calendar.DAY_OF_MONTH, 60);// to get previous day add 60
+		Date nextYear = cal.getTime();
+		String dateFutureStr = dateFormat.format(nextYear);
+
+		driver.findElement(By.id("startdate")).sendKeys(dateFutureStr);
 
 		// select Insurance Sum
 		int index_sum = 8; // generate random values from 0-8
@@ -291,8 +311,8 @@ public class QuoteSteps {
 		driver.findElement(By.id("email")).sendKeys(email);
 
 		// fill phone
-		//PhoneNumber phone = faker.phoneNumber();
-		//String phone_str = phone.toString();
+		// PhoneNumber phone = faker.phoneNumber();
+		// String phone_str = phone.toString();
 		driver.findElement(By.id("phone")).sendKeys("32450000");
 
 		// fill username
@@ -328,7 +348,7 @@ public class QuoteSteps {
 	@Then("the system should display the confirmation message {string}")
 	public void the_system_should_display_the_confirmation_message(String message_text) throws InterruptedException {
 		TimeUnit.SECONDS.sleep(15);
-		
+
 		// validate message
 		WebElement message = driver.findElement(By.xpath("/html/body/div[4]/h2"));
 		assertEquals(message.getText(), message_text);
